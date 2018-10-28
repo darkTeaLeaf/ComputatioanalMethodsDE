@@ -23,12 +23,11 @@ public class RungeKutta extends Euler{
         return RHS.solution(x + h, y + h*k3(x, y));
     }
 
-    public double[] calculateY(int N, int X, double x0, double y0) {
+    public void calculateY(int N, double X, double x0, double y0) {
         y = new double[N + 1];
 
         mainFormula(y, N, X, x0, y0);
 
-        return y;
     }
 
     public double[] getY(){

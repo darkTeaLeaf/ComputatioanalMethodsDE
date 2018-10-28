@@ -1,19 +1,19 @@
 package sample;
 
 public class TotalError {
-    double x0;
-    double y0;
-    int X;
+    private double x0;
+    private double y0;
+    private double X;
     int[] n;
-    double[] e;
+    private double[] e;
 
-    TotalError(double x0, double y0, int X) {
+    TotalError(double x0, double y0, double X) {
         this.x0 = x0;
         this.y0 = y0;
         this.X = X;
     }
 
-    public double[] calculateE(int n0, int N, int methodNum) {
+    public void calculateE(int n0, int N, int methodNum) {
         e = new double[N - n0];
         n = new int[N - n0];
 
@@ -52,8 +52,6 @@ public class TotalError {
                 e[i] = localError.maxError();
             }
         }
-
-        return e;
     }
 
     public double[] getE(){

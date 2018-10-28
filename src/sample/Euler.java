@@ -3,7 +3,7 @@ package sample;
 public class Euler extends Grid {
     private double[] y;
 
-    void mainFormula(double[] y, int N, int X, double x0, double y0) {
+    void mainFormula(double[] y, int N, double X, double x0, double y0) {
         createGrid(N, X, x0, y0);
 
         for (int i = 1; i < N + 1; i++) {
@@ -15,12 +15,11 @@ public class Euler extends Grid {
         return h * RHS.solution(x, y); // deltaY[i-1] = hf(x[i-1], y[i-1])
     }
 
-    public double[] calculateY(int N, int X, double x0, double y0) {
+    public void calculateY(int N, double X, double x0, double y0) {
         y = new double[N + 1];
 
         mainFormula(y, N, X, x0, y0);
 
-        return y;
     }
 
     public double[] getY(){

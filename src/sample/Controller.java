@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -11,12 +10,12 @@ import javafx.scene.input.MouseEvent;
 
 
 public class Controller {
-    Euler eulerComputation;
-    ImprovedEuler improvedComputation;
-    RungeKutta rungeKuttaComputation;
-    ExactSolution exactComputation;
-    LocalError localError;
-    TotalError totalError;
+    private Euler eulerComputation;
+    private ImprovedEuler improvedComputation;
+    private RungeKutta rungeKuttaComputation;
+    private ExactSolution exactComputation;
+    private LocalError localError;
+    private TotalError totalError;
 
     @FXML
     public TextField x0;
@@ -54,27 +53,20 @@ public class Controller {
         exactComputation = new ExactSolution();
         localError = new LocalError();
 
-        computeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                getLineChart(Integer.parseInt(N.getText()), Integer.parseInt(X.getText()),
-                        Double.parseDouble(x0.getText()), Double.parseDouble(y0.getText()));
-                getLocalErrorChart();
-                totalError = new TotalError(Double.parseDouble(x0.getText()), Double.parseDouble(y0.getText()),
-                        Integer.parseInt(X.getText()));
-            }
+        computeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            getLineChart(Integer.parseInt(N.getText()), Double.parseDouble(X.getText()),
+                    Double.parseDouble(x0.getText()), Double.parseDouble(y0.getText()));
+            getLocalErrorChart();
+            totalError = new TotalError(Double.parseDouble(x0.getText()), Double.parseDouble(y0.getText()),
+                    Double.parseDouble(X.getText()));
         });
 
-        computeButtonTab2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                getTotalErrorChart(Integer.parseInt(n0.getText()),Integer.parseInt(NTab2.getText()));
-            }
-        });
+        computeButtonTab2.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
+                getTotalErrorChart(Integer.parseInt(n0.getText()),Integer.parseInt(NTab2.getText())));
 
     }
 
-    private void getLineChart(int N, int X, double x0, double y0){
+    private void getLineChart(int N, double X, double x0, double y0){
         lineChart.getData().clear();
 
         eulerComputation.calculateY(N, X, x0, y0);
@@ -107,10 +99,14 @@ public class Controller {
 
     private void getLocalErrorChart(){
         locErrorChart.getData().clear();
+        localError.calculateE(eulerComputation.getY(),exactComputation.getY(),exactComputation.x);
+        double[] eulerError = localError.getE();
 
-        double[] eulerError = localError.calculateE(eulerComputation.getY(),exactComputation.getY(),exactComputation.x);
-        double[] improvedError = localError.calculateE(improvedComputation.getY(),exactComputation.getY(),exactComputation.x);
-        double[] rungeKuttaError = localError.calculateE(rungeKuttaComputation.getY(),exactComputation.getY(),exactComputation.x);
+        localError.calculateE(improvedComputation.getY(),exactComputation.getY(),exactComputation.x);
+        double[] improvedError = localError.getE();
+
+        localError.calculateE(rungeKuttaComputation.getY(),exactComputation.getY(),exactComputation.x);
+        double[] rungeKuttaError = localError.getE();
 
         XYChart.Series eulerGraph = new XYChart.Series();
         XYChart.Series improvedGraph = new XYChart.Series();
@@ -133,10 +129,14 @@ public class Controller {
 
     private void getTotalErrorChart(int n0, int N){
         totalErrorChart.getData().clear();
+        totalError.calculateE(n0, N,  0);
+        double[] eulerError = totalError.getE();
 
-        double[] eulerError = totalError.calculateE(n0, N,  0);
-        double[] improvedError = totalError.calculateE(n0, N, 1);
-        double[] rungeKuttaError = totalError.calculateE(n0, N, 2);
+        totalError.calculateE(n0, N, 1);
+        double[] improvedError = totalError.getE();
+
+        totalError.calculateE(n0, N, 2);
+        double[] rungeKuttaError = totalError.getE();
 
         XYChart.Series eulerGraph = new XYChart.Series();
         XYChart.Series improvedGraph = new XYChart.Series();

@@ -18,4 +18,14 @@ public class LocalError {
     public double[] getE(){
         return e;
     }
+
+    public double maxError(){
+        double max = 0;
+        for (double anE : e) {
+            if (max < anE) {
+                max = anE;
+            }
+        }
+        return max;
+    }
 }

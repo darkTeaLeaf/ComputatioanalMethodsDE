@@ -31,7 +31,7 @@ public class TotalError {
                 exactSolution.calculateY(n[i], X, x0, y0);
 
                 localError.calculateE(method.getY(), exactSolution.getY(), method.x);
-                e[i] = localError.getE()[localError.getE().length - 1];
+                e[i] = localError.maxError();
             }
 
             if (methodNum == 1) {
@@ -40,7 +40,7 @@ public class TotalError {
                 exactSolution.calculateY(n[i], X, x0, y0);
 
                 localError.calculateE(method.getY(), exactSolution.getY(), method.x);
-                e[i] = localError.getE()[localError.getE().length - 1];
+                e[i] = localError.maxError();
             }
 
             if (methodNum == 2) {
@@ -49,7 +49,7 @@ public class TotalError {
                 exactSolution.calculateY(n[i], X, x0, y0);
 
                 localError.calculateE(method.getY(), exactSolution.getY(), method.x);
-                e[i] = localError.getE()[localError.getE().length - 1];
+                e[i] = localError.maxError();
             }
         }
 

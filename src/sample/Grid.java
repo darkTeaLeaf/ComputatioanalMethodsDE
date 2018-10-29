@@ -8,7 +8,7 @@ abstract class Grid {
     double[] x;
 
     void createGrid(int N, double X, double x0, double y0){
-        this.h = X/N;
+        this.h = (X-x0)/N;
         this.x0 = x0;
         this.y0 = y0;
 

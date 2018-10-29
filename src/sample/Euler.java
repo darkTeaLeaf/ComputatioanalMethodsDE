@@ -5,6 +5,7 @@ public class Euler extends Grid {
 
     void mainFormula(double[] y, int N, double X, double x0, double y0) {
         createGrid(N, X, x0, y0);
+        y[0] = y0;
 
         for (int i = 1; i < N + 1; i++) {
             y[i] = y[i - 1] + deltaY(x[i - 1], y[i - 1]); // y[i] = y[i-1] + deltaY[i-1]

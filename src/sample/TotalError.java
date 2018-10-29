@@ -14,8 +14,8 @@ public class TotalError {
     }
 
     public void calculateE(int n0, int N, int methodNum) {
-        e = new double[N - n0];
-        n = new int[N - n0];
+        e = new double[N - n0 + 1];
+        n = new int[N - n0 + 1];
 
         for (int i = 0; i < n.length; i++) {
             n[i] = n0 + i;
